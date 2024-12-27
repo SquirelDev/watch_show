@@ -1,6 +1,6 @@
 // Get the URL parameters
 const urlParams = new URLSearchParams(window.location.search);
-const embedId = urlParams.get('embed');
+let embedId = urlParams.get('embed');
 const s = urlParams.get('s');
 const ep = urlParams.get('ep');
 const type = urlParams.get('type');
@@ -13,7 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Set iframe attributes
         const url = type === 'tv' ? 'embedtv' : 'emebed'
-        iframe.src = `https://www.2embed.cc/${url}/${embedId}&s=${s}&e=${ep}`;
+        if(type=='tv'){
+            iframe.src = `https://www.2embed.cc/embedtv/${embedId}&s=${s}&e=${ep}`;
+        } else {
+            embedId = embedId.split('-')[0]
+            iframe.src = `https://www.2embed.cc/embed/${embedId}`;
+        }
         iframe.allowFullscreen = true;
         
         // Find container and append iframe
